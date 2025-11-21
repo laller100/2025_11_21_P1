@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,21 +23,29 @@ namespace _2025_11_21_P1
             InitializeComponent();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void New_File(object sender, RoutedEventArgs e)
+        {
+            FileStream f = new FileStream("proba.txt", FileMode.Create);
+            f.Close();
+        }
+
+        private void Open_File(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog opendialog = new OpenFileDialog();
+            opendialog.ShowDialog();
+            textBox.Text = File.ReadAllText(opendialog.FileName);
+        }
+
+        private void Save_File(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog savedialog = new SaveFileDialog();
+            savedialog.ShowDialog();
+            File.WriteAllText(savedialog.FileName, textBox.Text, Encoding.UTF8);
+        }
+
+        private void Exit_Button(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void New_window(object sender, RoutedEventArgs e)
-        {
-            Window window = new Window();
-            window.Show();
-        }
-
-        private void Open_window(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.ShowDialog();
         }
     }
 }
